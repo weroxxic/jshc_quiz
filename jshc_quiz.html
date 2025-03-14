@@ -1,113 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        header, footer {
-            background: #333;
-            color: white;
-            padding: 10px;
-        }
-        .container {
-            padding: 20px;
-        }
-        .options {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .options label {
-            display: block;
-            margin: 5px;
-            cursor: pointer;
-        }
-        button {
-            margin: 10px;
-            padding: 10px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Fun Quiz</h1>
-    </header>
-    <div class="container">
-        <h2 id="question">Loading question...</h2>
-        <div class="options" id="options"></div>
-        <button onclick="prevQuestion()">Previous</button>
-        <button onclick="nextQuestion()">Next</button>
-        <button onclick="submitQuiz()">Submit</button>
-        <h3 id="score"></h3>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Application</title>
+    <link rel="stylesheet" href="jshc_quiz.css" />
+  </head>
+  <body>
+    <div class="app">
+      <h1>Fun Quiz</h1>
+      <div class="quiz">
+        <p id="questions">Question number one</p>
+        <div id="answer-buttons">
+            <button class="btn">Option 1</button>
+            <button class="btn">Option 2</button>
+            <button class="btn">Option 3</button>
+            <button class="btn">Option 4 </button>
+        </div>
+        <button type="button" id="next-btn">Next</button>
+      </div>
     </div>
-    <footer>
-        <p>&copy; 2025 Quiz App</p>
-    </footer>
-    <script>
-        const questions = [
-            { q: "Which is next: triangle, square, pentagon, ______.", options: ["Septagon", "Trapezoid", "Octagon", "Hexagon"], answer: 3 },
-            { q: "Which word pair has the same correlation as 'HEART: CHEST.'", options: ["COW: CALF", "DOG: PAW", "COMPUTER: CORD", "PICTURE: FRAME"], answer: 3 },
-            { q: "If red t-shirts are hand-washed, and most hand-washed clothes use cold water, can we conclude that all red t-shirts are washed in cold water?", options: ["Yes", "No", "Too little information"], answer: 2 },
-            { q: "Finish the sequence: 7, 14, 8, 15, 9, 16, 10, ___", options: ["11", "17", "12", "18"], answer: 1 },
-            { q: "An artist and a carpenter take a lie detector test. The artist says the carpenter is their brother. The carpenter says, 'I don't have a brother.' Who is lying?", options: ["The artist", "The carpenter", "Neither", "Both"], answer: 2 }
-        ];
-        
-        let currentQuestion = 0;
-        let userAnswers = new Array(questions.length).fill(null);
-        
-        function loadQuestion() {
-            document.getElementById("question").innerText = questions[currentQuestion].q;
-            let optionsHTML = "";
-            questions[currentQuestion].options.forEach((opt, index) => {
-                optionsHTML += `<label><input type='radio' name='answer' value='${index}'> ${opt}</label>`;
-            });
-            document.getElementById("options").innerHTML = optionsHTML;
-        }
-        
-        function nextQuestion() {
-            saveAnswer();
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                loadQuestion();
-            }
-        }
-        
-        function prevQuestion() {
-            saveAnswer();
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                loadQuestion();
-            }
-        }
-        
-        function saveAnswer() {
-            const selected = document.querySelector("input[name='answer']:checked");
-            if (selected) {
-                userAnswers[currentQuestion] = parseInt(selected.value);
-            }
-        }
-        
-        function submitQuiz() {
-            saveAnswer();
-            let score = 0;
-            userAnswers.forEach((ans, i) => {
-                if (ans !== null) {
-                    score += ans === questions[i].answer ? 1 : -1;
-                }
-            });
-            document.getElementById("score").innerText = `Your Score: ${score}`;
-        }
-        
-        loadQuestion();
-    </script>
-</body>
+  </body>
 </html>
