@@ -1,3 +1,4 @@
+// https://youtu.be/PBcqGxrr9g8
 const questions = [
     {
         question: "Which one is the largest animal in the world?",
@@ -47,7 +48,7 @@ const questions = [
 ];
 
 const questionElement = document.getElementById("questions");
-const answerButton = document.getElementById("answers-buttons");
+const answerButton = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 
 let currentQuestionIndex = 0;
@@ -61,10 +62,32 @@ function startQuiz(){
 }
 
 function showQuestions(){
+    resetState(); //to reset the previous options
     let currentQuestion = questions[currentQuestionIndex];
     let questionNo = currentQuestionIndex + 1;
     questionElement.innerHTML = questionNo + "." + currentQuestion.question;
 
+    currentQuestion.answer.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+
+        button.classList.add("btn");
+        answerButton.appendChild(button);
+    })
 }
 
-// https://youtu.be/PBcqGxrr9g8
+startQuiz();
+nextButton.addEventListener("click", function() {
+    if (currentQuestionIndex < questions.length) {
+        startQuiz();
+        currentQuestionIndex++; // Move to the next element
+    }
+}
+);
+
+function resetState(){
+    nextButton.style.display = "none";
+    while(answerButton.firstChild){
+        answerButton.removeChild(answerButton.firstChild);
+    }
+}
